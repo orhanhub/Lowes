@@ -1,12 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//Components,
+//NavBar is the top navigation bar
+//ContentWrapper is the rest of the page below NavBar
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import NavBar from "./NavBar/index";
+import ContentWrapper from "./Wrapper/index";
+import { LoweProvider } from "./contextAPI";
+import {
+  initialProductState,
+  pageInfoState,
+  filterByState
+} from "./apiDataResult";
+
+//Main Component
+export default function App() {
+  //Pass the product state to the components / containers
+  const [products, setProducts] = useState(initialProductState);
+
+  return (
+    <>
+      <LoweProvider
+        value={{
+          products,
+          setProducts,
+          pageInfoState,
+          filterByState
+        }}
+      >
+        <NavBar />
+        <br />
+        <ContentWrapper />
+      </LoweProvider>
+    </>
+  );
+}
+
+//render the app;
+ReactDOM.render(<App />, document.getElementById("root"));
